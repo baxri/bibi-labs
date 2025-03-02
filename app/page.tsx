@@ -1,9 +1,43 @@
 import Image from "next/image";
+import { client } from "@/sanity/lib/client";
+import { groq } from "next-sanity";
 
-export default function Home() {
+// Define the Post type
+interface Post {
+  _id: string;
+  title: string;
+  slug: {
+    current: string;
+  };
+  mainImage?: {
+    asset: {
+      url: string;
+    };
+  };
+  publishedAt: string;
+  excerpt?: string;
+}
+
+export default async function Home() {
+  // Fetch all posts from Sanity
+  const posts = await client.fetch<Post[]>(
+    groq`*[_type == "post"] | order(publishedAt desc) {
+      _id,
+      title,
+      slug,
+      mainImage {
+        asset-> {
+          url
+        }
+      },
+      publishedAt,
+      excerpt
+    }`
+  );
+
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
+      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start w-full max-w-4xl">
         <Image
           className="dark:invert"
           src="/next.svg"
@@ -12,16 +46,42 @@ export default function Home() {
           height={38}
           priority
         />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+        
+        <h1 className="text-2xl font-bold">Latest Posts</h1>
+        
+        {posts.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+            {posts.map((post) => (
+              <div key={post._id} className="border border-gray-200 dark:border-gray-800 rounded-lg p-4 hover:shadow-md transition-shadow">
+                {post.mainImage && (
+                  <div className="relative w-full h-48 mb-4">
+                    <Image
+                      src={post.mainImage.asset.url}
+                      alt={post.title}
+                      fill
+                      className="object-cover rounded-md"
+                    />
+                  </div>
+                )}
+                <h2 className="text-xl font-semibold mb-2">{post.title}</h2>
+                <p className="text-sm text-gray-500 mb-2">
+                  {new Date(post.publishedAt).toLocaleDateString()}
+                </p>
+                {post.excerpt && (
+                  <p className="text-sm text-gray-600 dark:text-gray-400">{post.excerpt}</p>
+                )}
+                <a 
+                  href={`/posts/${post.slug.current}`} 
+                  className="mt-4 inline-block text-blue-600 dark:text-blue-400 hover:underline"
+                >
+                  Read more →
+                </a>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p>No posts found.</p>
+        )}
 
         <div className="flex gap-4 items-center flex-col sm:flex-row">
           <a
