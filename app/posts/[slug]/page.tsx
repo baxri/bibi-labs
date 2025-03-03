@@ -24,10 +24,8 @@ interface Props {
 }
 
 export default async function PostPage({ params }: Props) {
-  // Fetch the post from Sanity
-  // Check if the slug parameter is correctly passed
-  console.log("Fetching post with slug:", params.slug);
-  
+  const { slug } = await params
+
   const post = await client.fetch<Post | null>(
     groq`*[_type == "post" && slug.current == $slug][0]{
       _id,
@@ -42,22 +40,8 @@ export default async function PostPage({ params }: Props) {
       body,
       excerpt
     }`,
-    { slug: `/${params.slug}` }
+    { slug: `/${slug}` }
   );
-  
-  // Log the result to debug
-  console.log("Query result:", post);
-  
-  // If post not found, return 404
-  if (!post) {
-    console.error("Post not found for slug:", params.slug);
-    notFound();
-  }
-
-
-  console.log('post', params.slug, post);
-
-
 
 
   // If post not found, return 404
@@ -80,9 +64,9 @@ export default async function PostPage({ params }: Props) {
               />
             </div>
           )}
-          
+
           <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
-          
+
           <div className="text-gray-500 mb-8">
             {new Date(post.publishedAt).toLocaleDateString()}
           </div>
@@ -95,7 +79,7 @@ export default async function PostPage({ params }: Props) {
 
           {/* Add your Sanity Portable Text component here for the body */}
           {/* Example: <PortableText value={post.body} /> */}
-          
+
           <div className="mt-8">
             <a
               href="/"
@@ -111,17 +95,19 @@ export default async function PostPage({ params }: Props) {
 }
 
 export async function generateMetadata({ params }: Props) {
+  const { slug } = await params
+
   const post = await client.fetch<Post | null>(
     groq`*[_type == "post" && slug.current == $slug][0]{
       title,
       excerpt
     }`,
-    { slug: params.slug }
+    { slug: `/${slug}` }
   );
 
   if (!post) {
     return {
-      title: 'Post Not Found',
+      title: "Post Not Found",
     };
   }
 
@@ -129,4 +115,4 @@ export async function generateMetadata({ params }: Props) {
     title: post.title,
     description: post.excerpt,
   };
-} 
+}
