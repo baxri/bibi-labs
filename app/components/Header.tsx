@@ -109,23 +109,23 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className={`flex ${isMobile ? 'flex-col' : 'justify-between'} items-center p-3`}>
           {isMobile && (
-            <nav className="flex space-x-8 w-full justify-center mb-4">
-              <Link
+            <nav className="flex space-x-4 w-full justify-center mb-4">
+              {/* <Link
                 href="/work"
-                className="text-gray-400 dark:text-gray-400 hover:text-gray-200 dark:hover:text-white"
+                className="bg-gray-200 dark:bg-gray-800 px-3 py-1 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors"
               >
                 Work
-              </Link>
+              </Link> */}
               {/* <Link 
                 href="/blog" 
-                className="text-gray-400 dark:text-gray-400 hover:text-gray-200 dark:hover:text-white"
+                className="bg-gray-200 dark:bg-gray-800 px-3 py-1 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors"
               >
                 Blog
               </Link> */}
               <a
                 href="#"
                 onClick={openContactModal}
-                className="text-gray-400 dark:text-gray-400 hover:text-gray-200 dark:hover:text-white cursor-pointer"
+                className="inline-flex items-center gap-2 bg-gray-800 hover:bg-gray-900 text-white px-4 py-2 rounded-md transition-colors duration-200 font-medium shadow-sm"
               >
                 Contact
               </a>
@@ -151,23 +151,23 @@ export default function Header() {
           </div>
           
           {!isMobile && (
-            <nav className="flex space-x-8">
-              <Link
+            <nav className="flex space-x-4">
+              {/* <Link
                 href="/work"
-                className="text-gray-400 dark:text-gray-400 hover:text-gray-200 dark:hover:text-white"
+                className="bg-gray-200 dark:bg-gray-800 px-3 py-1 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors"
               >
                 Work
-              </Link>
+              </Link> */}
               {/* <Link 
                 href="/blog" 
-                className="text-gray-400 dark:text-gray-400 hover:text-gray-200 dark:hover:text-white"
+                className="bg-gray-200 dark:bg-gray-800 px-3 py-1 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors"
               >
                 Blog
               </Link> */}
               <a
                 href="#"
                 onClick={openContactModal}
-                className="text-gray-400 dark:text-gray-400 hover:text-gray-200 dark:hover:text-white cursor-pointer"
+                className="inline-flex items-center gap-2 bg-gray-800 hover:bg-gray-900 text-white px-4 py-2 rounded-md transition-colors duration-200 font-medium shadow-sm"
               >
                 Contact
               </a>

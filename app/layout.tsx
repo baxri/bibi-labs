@@ -19,6 +19,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Lynxly",
   description: "Lynxly is a studio that designs and develops mobile, web and blockchain apps.",
+  icons: {
+    icon: '/icon.ico',
+  },
 };
 
 export default function RootLayout({
@@ -31,9 +34,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Header />
-        <main>{children}</main>
-        <Footer />
+       {children}
       </body>
     </html>
   );

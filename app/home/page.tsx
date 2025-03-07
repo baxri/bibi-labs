@@ -23,6 +23,7 @@ interface Project {
 }
 
 export default async function Home() {
+  // Fetch all projects from Sanity
   const projects = await client.fetch<Project[]>(
     groq`*[_type == "project"] | order(_createdAt desc) {
       _id,
@@ -53,7 +54,7 @@ export default async function Home() {
                 className="dark:border-gray-800 overflow-hidden block"
               >
                 {project.coverImage && (
-                  <div className="relative w-full h-[770px]">
+                  <div className="relative w-full h-[660px]">
                     <Image
                       src={project.coverImage.asset.url}
                       alt={project.title}
@@ -66,7 +67,7 @@ export default async function Home() {
                   <div className="flex flex-col p-2">
                     <p className="text-white font-bold mt-2 text-[10pt]">{project.title}</p>
                     {project.description && (
-                      <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-2 max-w-[200px] text-[10pt]">{project.description}</p>
+                      <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-2 max-w-[300px] text-[10pt]">{project.description}</p>
                     )}
                   </div>
                 </div>
