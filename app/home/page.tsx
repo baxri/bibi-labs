@@ -20,12 +20,13 @@ interface Project {
   link?: string;
   iosStoreLink?: string;
   androidStoreLink?: string;
+  orderRank?: string;
 }
 
 export default async function Home() {
-  // Fetch all projects from Sanity
+  // Fetch all projects from Sanity, ordered by orderRank
   const projects = await client.fetch<Project[]>(
-    groq`*[_type == "project"] | order(_createdAt desc) {
+    groq`*[_type == "project"] | order(orderRank) {
       _id,
       title,
       slug,
