@@ -5,7 +5,6 @@ import Footer from '@/app/components/Footer'
 
 import "./globals.css";
 
-
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -16,9 +15,13 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+// Get company information from environment variables
+const companyName = process.env.NEXT_PUBLIC_COMPANY_NAME || "Lynxly";
+const companyDescription = process.env.NEXT_PUBLIC_COMPANY_DESCRIPTION || "is a studio that designs and develops mobile, web and blockchain apps.";
+
 export const metadata: Metadata = {
-  title: "Lynxly",
-  description: "Lynxly is a studio that designs and develops mobile, web and blockchain apps.",
+  title: companyName,
+  description: `${companyName} ${companyDescription}`,
   icons: {
     icon: '/icon.ico',
   },

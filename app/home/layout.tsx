@@ -1,5 +1,6 @@
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
+import LayoutWrapper from "../components/Layout";
 
 export default function RootLayout({
   children,
@@ -7,10 +8,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <>
-      <Header />
+   <LayoutWrapper>
+     <Header />
       <main>{children}</main>
       <Footer />
-    </>
+   </LayoutWrapper>
   );
 }
